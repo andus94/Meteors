@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>UCLA Single Sign-On</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/shibboleth-idp/css/ucla-logon.css
+">
+    <script src="/shibboleth-idp/js/modernizr.custom.js
+"></script>
+        </head>
+
+<body onload="document.forms[0].submit()">
+
+<header class="logo" role="banner"><img src="/shibboleth-idp/images/ucla-white.png
+" alt="UCLA"></header>
+
+<section class="content" role="main">
+    <article>
+<noscript>
+    <p>
+        <strong>Note:</strong> Since your browser does not support JavaScript,
+        you must press the Continue button once to proceed.
+    </p>
+</noscript>
+
+<form action="https&#x3a;&#x2f;&#x2f;ccle.ucla.edu&#x2f;Shibboleth.sso&#x2f;SAML2&#x2f;POST" method="post">
+    <div>
+        <input type="hidden" name="RelayState" value="https&#x3a;&#x2f;&#x2f;ccle.ucla.edu&#x2f;mod&#x2f;resource&#x2f;view.php&#x3f;id&#x3d;1021920"/>
+        
+        <input type="hidden" name="SAMLResponse" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHNhbWwycDpSZXNwb25zZSBEZXN0aW5hdGlvbj0iaHR0cHM6Ly9jY2xlLnVjbGEuZWR1L1NoaWJib2xldGguc3NvL1NBTUwyL1BPU1QiIElEPSJfY2Y4ZmZkNDY0MTFiMjA5M2Y5MTFjOTE4MTE4YmRjODkiIEluUmVzcG9uc2VUbz0iXzUxNjc1Yjg5MzFiZTk2MzU1MzdiMjYzYTM0YWFkYzFlIiBJc3N1ZUluc3RhbnQ9IjIwMTYtMDMtMDhUMDY6MTI6MTYuNTM1WiIgVmVyc2lvbj0iMi4wIiB4bWxuczpzYW1sMnA9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpwcm90b2NvbCI+PHNhbWwyOklzc3VlciBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpuYW1laWQtZm9ybWF0OmVudGl0eSIgeG1sbnM6c2FtbDI9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphc3NlcnRpb24iPnVybjptYWNlOmluY29tbW9uOnVjbGEuZWR1PC9zYW1sMjpJc3N1ZXI+PHNhbWwycDpTdGF0dXM+PHNhbWwycDpTdGF0dXNDb2RlIFZhbHVlPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6c3RhdHVzOlJlc3BvbmRlciI+PHNhbWwycDpTdGF0dXNDb2RlIFZhbHVlPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6c3RhdHVzOk5vUGFzc2l2ZSIvPjwvc2FtbDJwOlN0YXR1c0NvZGU+PC9zYW1sMnA6U3RhdHVzPjwvc2FtbDJwOlJlc3BvbnNlPg=="/>
+    </div>
+    <noscript>
+        <div>
+            <input type="submit" value="Continue"/>
+        </div>
+    </noscript>
+</form>
+
+        <h1>You Have Signed In</h1>
+
+        <p id="loading-spinner"></p>
+
+    	<p>Please be patient while your application loads.</p>
+    
+    </article>
+
+    
+</section>
+
+<footer role="contentinfo" class="ucla-iam-footer">
+    <div class="ucla-iam-footer-content">
+        <p><a href="/shibboleth-idp/cms-policies.html
+">Privacy, Security & Legal</a></p>
+    </div>
+</footer>
+
+
+<script src="/shibboleth-idp/js/placeholders.min.js
+"></script>
+<script src="/shibboleth-idp/js/spin.min.js
+"></script>
+
+</body>
+</html>

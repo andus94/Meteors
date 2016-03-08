@@ -1,0 +1,126 @@
+---
+title: "Midterm Exam"
+author: "Andus Kong"
+date: "February 7, 2016"
+output: html_document
+---
+
+Download the data from CCLE and load it into your workspace.
+
+```{r, error = TRUE}
+# write your commands here
+download.file(url = "https://ccle.ucla.edu/mod/resource/view.php?id=1021920", destfile = "PCRData.csv")
+midtermdata <- read.csv("C:/Users/wkong_000/Desktop/Statistics/Stats 102B/Data Sets/PCRData.csv")
+```
+
+#### Task 1 
+
+_Fit a linear model to predict the standing height of a female based on all of the x predictors. [Use function lm()] Print a summary of the linear model. How many coeffecients associated with the variables are significant? Do any of the signs of the coefficients surprise you?_
+
+```{r}
+# write your commands here
+m1 <- lm(Y ~ X1 + X2 + X3 +X4 + X5 + X6 + X7 + X8 + X9, data = midtermdata)
+summary(m1) 
+#####################
+# Answer to comments
+#####################
+# only 1 variable, upper arm length, is significant
+# the negative coefficients suprise me because bigger body parts usually mean taller people
+######################
+```
+
+Some of the coefficients were negative. Apart from the ratio based measurements, it does not seem to make sense that larger measurements of a body part would correspond to a smaller prediction for height. Part of the problem is multicolinearity. Many of the X-variables are correlated with one another. This often means that an increase of one variable cannot be distinguished from an increase of another variable. When fitting linear models, the model gets 'confused' and has a hard time correctly assigning the correct amount of dependence upon the variables.
+
+One way to improve our model is by using backward stepwise selection of variables. This can be achieved using the `step()` function in R. Provide `step` with the full model and tell it that the direction of variable selction is backwards. R will then eliminate variables in the model, one at a time, removing the variable that will influence the AIC criteria the least.
+
+#### Task 2 
+
+_Perform backwards variable selction with the step() function. Fit the resulting model and print its summary._
+
+```{r}
+# write your commands here
+step(m1)
+m2 <- lm(Y ~ X1 + X4 + X6 + X7, data = midtermdata)
+summary(m2)
+```
+
+If we go back to the full model with all of the x-variables used as predictors, we can see that part of the problem is that many of the variables are correlated with one another.
+
+#### Task 3
+
+_Print out the correlation matrix between x-variables. Round the results to two decimal places. Which pairs of variables appear to be highly correlated with one another?_
+
+```{r}
+# write your commands here
+cor(midtermdata[2:10])
+##################
+# Answers to questions
+##################
+# Upper Arm Length is positively correlated with Hand Length, Upper Leg Length, and Lower Leg Length
+# Upper Leg Length is positively correlated with Lower Leg Length and Hand Length
+# There are a few others but the ones mentioned about are the most correlated
+# Lower Leg length is postively correlated with Forearm Length
+##################
+```
+
+One method to address this issue of multicolinearity is through Principal Components Regression. The big idea is this: perform principal components analysis on the matrix of predictor variables. The resulting principal components will be uncorrelated with each other. Regress the Y variable against the principal components.
+
+#### Task 4
+
+_Perform principal components analysis using the correlation matrix of the matrix of x-variables. Print out the resulting PCA loadings (eigenvector matrix). Reexpress the x-variable data in its principal components. Don't forget to center the X matrix before doing your analysis._
+
+```{r}
+# write your commands here
+x <- midtermdata[2:10]
+means <- colMeans(x)
+xc <- (apply(x, 1, FUN = function(x) x - means))
+xc <- (t(xc))
+r <- cor(xc)
+e <- eigen(r)
+Qr <- e$vectors
+xcs <- scale(x)
+pc <- xcs %*% Qr
+Qr
+```
+
+Now that we have expressed our data in its principal components, we will attempt to perform regression again.
+
+#### Task 5
+
+_Fit a linear regression model to predict the standing heights (Y) based on the Principal Components of X. Print a summary of the resulting linear model._
+
+```{r}
+# write your commands here
+Y <- data.frame(midtermdata[,1])
+colnames(Y) <- "Y"
+dat <- data.frame(Y, pc)
+m3 <- lm(Y ~ X1 + X2 + X3 +X4 + X5 + X6 + X7 + X8 + X9, data = dat)
+summary(m3)
+```
+ 
+We may find that many of the principal components do not contribute significantly towards predicting Y. We can eliminate the latter principal components, as they contribute the least towards capturing the variation in X.
+
+#### Task 6
+
+_Improve the linear regression model by removing some of the latter principal components. It may be safer to eliminate one or two principal components at a time and check the model fit. Print a summary of the final linear model._
+
+```{r}
+# write your commands here
+pc1 <- xcs %*% Qr[,1:8]
+dat <- data.frame(Y, pc1)
+m4 <- lm(Y ~ X1 + X2 + X3 +X4 + X5 + X6 + X7 + X8, data = dat)
+pc2 <- xcs %*% Qr[,1:3]
+dat <-data.frame(Y, pc2)
+m5 <- lm(Y ~ X1 + X2 + X3, data = dat)
+summary(m5)
+```
+
+### Task 7
+
+_Compare the summary information of the model resulting from Backwards elimination (Task 2) and from Principal components regression (Task 6). Which model do you think does a better job?_
+
+ANSWER:  
+
+I believe the variable selection method does a better job in this case. The R-squared is higher for the Backwards Elimination regression than the R-squared for the principal component regression, which indicates that the stepwise regression model captures more of the variance. Also the Backwards Elimination model makes more sense in that the coefficients of the model are positive which we would expect the relationship to be. The Principal Component Regression, however, has negative coefficients which does not make much sense.
+
+Variable selection methods and Principal Components Regression are different approaches to dealing with issues of multicolinearity and dimension reduction. Each method has its own strengths and may be more appropriate to use in different situations.
