@@ -2,7 +2,7 @@
 title: "Midterm Exam"
 author: "Andus Kong"
 date: "February 7, 2016"
-output: html_document
+output: pdf_document
 ---
 
 Download the data from CCLE and load it into your workspace.
